@@ -5,6 +5,19 @@ $(document).ready(function() {
     getNews();
 })
 
+$(document).ready(function() {
+    getNews("sports");
+})
+
+$(document).ready(function() {
+    getNews("entertainment");
+
+    //Get favicons
+    $("a[href^='http']").each(function() {
+        $(this).prepend('<img src="https://www.google.com/s2/favicons?domain=' + this.href + '">');
+    });
+})
+
 // Category options are business, entertainment, general, health, science, sports, technology
 function getNews(category='') {
     $.ajax({
