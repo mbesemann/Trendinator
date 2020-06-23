@@ -11,17 +11,27 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     getNews("entertainment");
+
+    //Get favicons
+    $("a[href^='http']").each(function() {
+        $(this).prepend('<img src="https://www.google.com/s2/favicons?domain=' + this.href + '">');
+    });
 })
 
 // Category options are business, entertainment, general, health, science, sports, technology
 function getNews(category='') {
     $.ajax({
-        url: `${baseUrl}?apiKey=${apiKey}&category=${category}`,
+        url: `${baseUrl}?apiKey=${apiKey}&country=ca&category=${category}`,
         type: 'GET'
     }).then(function(response) {
-        console.log(response);
-        response.forEach(story => {
-            console.log(story);
+        response.articles.forEach(story => {
+            var articleDiv = $("<div>");
+            var articleUrl = $("<a>").prop("href", story.url).text(story.title).prop("target", "_blank");
+            var source = $("<h4>").text(story.source.name);
+            var datePublished = $("<span>").text(story.publishedAt);
+            var description = $("<p>").text(story.description);
+            articleDiv.append(articleUrl, source, datePublished, description);
+            $("body").append(articleDiv);
         });
     });
 }
