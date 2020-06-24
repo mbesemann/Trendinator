@@ -1,4 +1,5 @@
 var queryURL = "https://api.twitter.com/1.1/trends/place.json?";
+<<<<<<< HEAD
 var authParameters = "consumer_key=CvCZcL1YQpB5ndLhDnPATt784,consumer_secret=28Ap0upYFI3okcorEK0dcA5GYglpkGbxgym7NX0ClxAIHqqKtO, access_token=29120924-nxsRCe0q8AY1Q7SNlUUNGVKin3RP7UHrSjAbsyGv4, access_token_secret=60b31hGCBNRJo7lLRgDh9hKFbnkiUjFa5MeJzrRVpHfk8";
 var queryParameters = "id=1";
 
@@ -36,3 +37,15 @@ $(document).ready(function () {
    
 });
 */
+=======
+var queryParameters = "id=1";
+
+$(document).ready(function () {
+    
+    var query = queryURL + queryParameters;
+    $.ajax({url: query, method: "GET"}).then(function(response) {
+        console.log(response);
+    })
+
+});
+>>>>>>> 366929b... twitter API: just console.log to start off
