@@ -14,13 +14,11 @@ $(document).ready(function () {
         console.log(err);
         reply[0].trends.forEach(function(trend, index) {
             console.log(trend);
-            var twitterTopicDiv = $("<div>");
-            var trendNameDiv = $("<div>").text("Trend: " + trend.name);
-            var trendURLDiv = $("<div>").text("URL: " + trend.url);
-            var trendTweetVolume = $("<div>").text("Tweet Volume: " + trend.tweet_volume);
-
-            twitterTopicDiv.append(trendNameDiv, trendURLDiv, trendTweetVolume);
-            $(".twitter-trends-content").append(twitterTopicDiv);
+            var trendDiv = $("<div>");
+            var trendNameUrl = $("<a>").text(trend.name).prop("href", trend.url).prop("target", "_blank");
+            var trendTweetVolumeDiv = $("<div>").text("Tweet Volume: " + trend.tweet_volume);
+            trendDiv.append(trendNameUrl, trendTweetVolumeDiv);
+            $(".twitter-trends-content").append(trendDiv);
         });
     });
 });
