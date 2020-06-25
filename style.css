@@ -1,9 +1,26 @@
 .twitter-trends{
     font-size: 35px;
-    color: #00897b;
-    border-right: solid black 5px;
+    color:  #2A3442;
 }
 .news-articles{
     font-size: 35px;
-    color: #00897b;
+    color:  #2A3442;
+}
+
+.news-articles-content{
+    padding: 10px;
+    font-size: 16px;
+    color: black;
+}
+
+.news-article-item{
+    border-bottom: #EF6D72 3px solid;
+}
+
+.dark-blue{
+    background-color: #2A3442;
+}
+
+.coral{
+    background-color:  #EF6D72;
 }
