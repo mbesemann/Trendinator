@@ -13,11 +13,7 @@ function getNews(category='') {
     $(".news-articles-content").empty();
     $.ajax({
         url: `${proxyurl}${baseUrl}?apiKey=${apiKey}&country=ca&category=${category}`,
-        type: 'GET',
-        beforeSend: function(xhr){
-            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-            xhr.setRequestHeader('Origin', null);
-        }
+        type: 'GET'
     }).then(function(response) {
         response.articles.forEach(story => {
             var articleDiv = $("<div>");
@@ -35,6 +31,10 @@ function getNews(category='') {
 }
 
 $("#top-stories-btn").on("click", function(){getNews()});
+$("#top-stories-btn-side").on("click", function(){getNews()});
 $("#sports-btn").on("click", function(){getNews("sports")});
+$("#sports-btn-side").on("click", function(){getNews("sports")});
 $("#entertainment-btn").on("click", function(){getNews("entertainment")});
+$("#entertainment-btn-side").on("click", function(){getNews("entertainment")});
 $("#technology-btn").on("click", function(){getNews("technology")});
+$("#technology-btn-side").on("click", function(){getNews("technology")});
