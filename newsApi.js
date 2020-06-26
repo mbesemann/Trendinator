@@ -1,6 +1,6 @@
 const apiKey = "09a51a1a7002430abd69b82f52b2eaf3";
-const baseUrl = "https://newsapi.org/v2/top-headlines";
-const proxyurl = "https://cors-anywhere.herokuapp.com/";
+//const baseUrl = "https://newsapi.org/v2/top-headlines";
+const baseUrl = "https://highlycaffeinated.ca/getnews";
 
 var DateTime = luxon.DateTime;
 
@@ -12,9 +12,10 @@ $(document).ready(function() {
 function getNews(category='') {
     $(".news-articles-content").empty();
     $.ajax({
-        url: `${proxyurl}${baseUrl}?apiKey=${apiKey}&country=ca&category=${category}`,
+        url: `${baseUrl}?apiKey=${apiKey}&country=ca&category=${category}`,
         type: 'GET'
     }).then(function(response) {
+        console.log(response);
         response.articles.forEach(story => {
             var articleDiv = $("<div>");
             articleDiv.addClass("news-article-item");
