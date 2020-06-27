@@ -1,6 +1,6 @@
 const apiKey = "09a51a1a7002430abd69b82f52b2eaf3";
-const baseUrl = "https://newsapi.org/v2/top-headlines";
-const proxyurl = "https://cors-anywhere.herokuapp.com/";
+//const baseUrl = "https://newsapi.org/v2/top-headlines";
+const baseUrl = "https://highlycaffeinated.ca/getnews";
 
 var DateTime = luxon.DateTime;
 
@@ -12,13 +12,10 @@ $(document).ready(function() {
 function getNews(category='') {
     $(".news-articles-content").empty();
     $.ajax({
-        url: `${proxyurl}${baseUrl}?apiKey=${apiKey}&country=ca&category=${category}`,
-        type: 'GET',
-        beforeSend: function(xhr){
-            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-            xhr.setRequestHeader('Origin', null);
-        }
+        url: `${baseUrl}?apiKey=${apiKey}&country=ca&category=${category}`,
+        type: 'GET'
     }).then(function(response) {
+        console.log(response);
         response.articles.forEach(story => {
             var articleDiv = $("<div>");
             articleDiv.addClass("news-article-item");
@@ -35,6 +32,10 @@ function getNews(category='') {
 }
 
 $("#top-stories-btn").on("click", function(){getNews()});
+$("#top-stories-btn-side").on("click", function(){getNews()});
 $("#sports-btn").on("click", function(){getNews("sports")});
+$("#sports-btn-side").on("click", function(){getNews("sports")});
 $("#entertainment-btn").on("click", function(){getNews("entertainment")});
+$("#entertainment-btn-side").on("click", function(){getNews("entertainment")});
 $("#technology-btn").on("click", function(){getNews("technology")});
+$("#technology-btn-side").on("click", function(){getNews("technology")});
