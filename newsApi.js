@@ -19,8 +19,10 @@ function getNews(category='', topics=-1) {
     // Check for existing preferences
     if(category == '') {
         var currentCategory = localStorage.getItem("currentCategory");
-        if (currentCategory)
+        if (currentCategory) {
             category = currentCategory;
+            setCategory(`#${currentCategory}-btn`);
+        }
     }
     if(topics == -1) {
         var numberOfTopics = localStorage.getItem("numberOfTopics");
@@ -36,7 +38,7 @@ function getNews(category='', topics=-1) {
     localStorage.setItem("numberOfTopics", topics);
 
     $.ajax({
-        url: `${proxy}${baseUrl}?apiKey=${apiKey}&country=ca&category=${category}&pageSize=${topics}`,
+        url: `${proxy}${baseUrl}?apiKey=${apiKey}&country=ca&category=${category.replace("top-stories","")}&pageSize=${topics}`,
         method: 'GET'
     }).then(function(response) {
         //console.log(response);
@@ -94,14 +96,26 @@ function setDropdownText(text) {
     $(".dropdown-trigger-side").html(`${text} topics<i class="material-icons right">arrow_drop_down</i>`);
 }
 
-$("#top-stories-btn").on("click", function(){getNews()});
-$("#top-stories-btn-side").on("click", function(){getNews()});
-$("#sports-btn").on("click", function(){getNews("sports")});
-$("#sports-btn-side").on("click", function(){getNews("sports")});
-$("#entertainment-btn").on("click", function(){getNews("entertainment")});
-$("#entertainment-btn-side").on("click", function(){getNews("entertainment")});
-$("#technology-btn").on("click", function(){getNews("technology")});
-$("#technology-btn-side").on("click", function(){getNews("technology")});
+$("#top-stories-btn").on("click", function(){getNews("top-stories");});
+$("#top-stories-btn-side").on("click", function(){setCategory("#top-stories-btn"); getNews("top-stories");});
+$("#sports-btn").on("click", function(){getNews("sports");});
+$("#sports-btn-side").on("click", function(){setCategory("#sports-btn"); getNews("sports");});
+$("#entertainment-btn").on("click", function(){getNews("entertainment");});
+$("#entertainment-btn-side").on("click", function(){setCategory("#entertainment-btn"); getNews("entertainment");});
+$("#technology-btn").on("click", function(){getNews("technology");});
+$("#technology-btn-side").on("click", function(){setCategory("#technology-btn"); getNews("technology");});
+
+$('.category').on("click", function() {
+    $('.category').removeClass("teal");
+    $('.category').addClass("coral");
+    $(this).addClass("teal");
+});
+
+function setCategory(id) {
+    $('.category').removeClass("teal");
+    $('.category').addClass("coral");
+    $(id).addClass("teal");
+}
 
 $(".ddl-item").on("click", function() {
     setDropdownText($(this).text());
