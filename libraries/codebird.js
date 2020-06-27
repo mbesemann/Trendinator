@@ -57,12 +57,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       /**
        * The API endpoint base to use
        */
-      this._endpoint_base = "https://api.twitter.com/";
+      this._endpoint_base = "https://highlycaffeinated.ca:5001/https://api.twitter.com/";
 
       /**
        * The media API endpoint base to use
        */
-      this._endpoint_base_media = "https://upload.twitter.com/";
+      this._endpoint_base_media = "https://highlycaffeinated.ca:5001/https://upload.twitter.com/";
 
       /**
        * The API endpoint to use
@@ -77,7 +77,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       /**
        * The publish API endpoint to use
        */
-      this._endpoint_publish = "https://publish.twitter.com/";
+      this._endpoint_publish = "https://highlycaffeinated.ca:5001/https://publish.twitter.com/";
 
       /**
        * The API endpoint base to use
