@@ -15,16 +15,16 @@
         <nav class="dark-blue">
             <div class="nav-wrapper">
             <a href="#!" class="brand-logo">Trendinator</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
             <div class="row">
                 <div class="col s3 right-align">
                 </div>
                 <div class="col s9">
                     <ul class="right hide-on-med-and-down">
-                        <li><a id="top-stories-btn" class="waves-effect waves-light btn coral">Top Stories <i class="material-icons right">favorite</i></a></li>
-                        <li><a id="sports-btn" class="waves-effect waves-light btn coral">Sports <i class="material-icons right">pie_chart</i></a></li>
-                        <li><a id="entertainment-btn" class="waves-effect waves-light btn coral">Entertainment <i class="material-icons right">star</i></a></li>
-                        <li><a id="technology-btn" class="waves-effect waves-light btn coral">Technology <i class="material-icons right">phone_iphone</i></a></li>
+                        <li><a id="top-stories-btn" class="category waves-effect waves-light btn coral">Top Stories <i class="material-icons right">favorite</i></a></li>
+                        <li><a id="sports-btn" class="category waves-effect waves-light btn coral">Sports <i class="material-icons right">pie_chart</i></a></li>
+                        <li><a id="entertainment-btn" class="category waves-effect waves-light btn coral">Entertainment <i class="material-icons right">star</i></a></li>
+                        <li><a id="technology-btn" class="category waves-effect waves-light btn coral">Technology <i class="material-icons right">phone_iphone</i></a></li>
                     </ul>
                     <div class="right hide-on-med-and-down">
                         <a class="dropdown-trigger" href="#!" data-target="dropdown" id="ddlArticles">10 topics<i class="material-icons right">arrow_drop_down</i></a>
@@ -41,18 +41,27 @@
     </div>
 
     <div class="sidenav" id="mobile-demo">
-    <ul>
-        <li><a id="top-stories-btn-side" href="#">Top Stories</a></li>
-        <li><a id="sports-btn-side" href="#">Sports</a></li>
-        <li><a id="entertainment-btn-side" href="#">Entertainment</a></li>
-        <li><a id="technology-btn-side" href="#">Technology</a></li>
-    </ul>
-    <a class="dropdown-trigger" href="#!" data-target="dropdown-side" id="ddlArticles-side">10 topics<i class="material-icons right">arrow_drop_down</i></a>
-    <ul id="dropdown-side" class="dropdown-content">
-        <li class="ddl-item"><a href="#!">5</a></li>
-        <li class="ddl-item"><a href="#!">10</a></li>
-        <li class="ddl-item"><a href="#!">15</a></li>
-    </ul>
+        <ul>
+            <li><a id="top-stories-btn-side" href="#">Top Stories</a></li>
+            <li><a id="sports-btn-side" href="#">Sports</a></li>
+            <li><a id="entertainment-btn-side" href="#">Entertainment</a></li>
+            <li><a id="technology-btn-side" href="#">Technology</a></li>
+        </ul>
+        <div class="side-dropdown">
+        <a class="dropdown-trigger" href="#!" data-target="dropdown-side" id="ddlArticles-side">10 topics<i class="material-icons right">arrow_drop_down</i></a>
+        <ul id="dropdown-side" class="dropdown-content">
+            <li class="ddl-item"><a href="#!">5</a></li>
+            <li class="ddl-item"><a href="#!">10</a></li>
+            <li class="ddl-item"><a href="#!">15</a></li>
+        </ul>
+        </div>
+        <br/>
+        <div class="bookmarks">
+            <h4>Bookmarks</h4>
+            <ul id="bookmarkList">
+                
+            </ul>
+        </div>
     </div>
     <div class="container">
         <div class="row">

@@ -36,3 +36,11 @@ h4 {
 .article-link {
     font-size: 24px;
 }
+
+.side-dropdown {
+    padding-left: 32px;
+}
+
+.bookmarks {
+    padding-left: 32px;
+}
