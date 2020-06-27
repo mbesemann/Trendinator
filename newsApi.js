@@ -3,13 +3,17 @@ const baseUrl = "https://newsapi.org/v2/top-headlines";
 const proxy = "https://highlycaffeinated.ca:5001/"
 
 var DateTime = luxon.DateTime;
+var sidenav;
 
 $(document).ready(function() {
+    sidenav = M.Sidenav.getInstance($(".sidenav"));
+    loadBookmarks();
     getNews();
 })
 
 // Category options are business, entertainment, general, health, science, sports, technology
 function getNews(category='', topics=10) { 
+    sidenav.close();
     $(".news-articles-content").empty();
     localStorage.setItem("currentCategory", category);
     localStorage.setItem("numberOfTopics", topics);
@@ -23,14 +27,48 @@ function getNews(category='', topics=10) {
             articleDiv.addClass("news-article-item");
             var favicon = $("<img>").prop("src", "https://www.google.com/s2/favicons?domain=" + story.url);
             var articleUrl = $("<a>").prop("href", story.url).text(story.title).prop("target", "_blank").addClass("article-link");
+            var saveBtn = $("<a>").addClass("waves-effect waves-light btn saveBtn").text("Save").on("click", function() {
+                var link = $(this).prev().prop("href");
+                var text = $(this).prev().text();
+                saveBookmark(text, link);
+                sidenav.open();
+            });
             var storyDate = DateTime.fromISO(story.publishedAt);
             var datePublished = $("<span>").text(storyDate.toLocaleString());
-            var source = $("<h4>").text(story.source.name);
+            var source = $("<span>").text(story.source.name);
             var description = $("<p>").text(story.description);
-            articleDiv.append(favicon, articleUrl, $("<br>"), datePublished, source, description);
+            articleDiv.append(favicon, articleUrl, "&nbsp;", saveBtn, $("<br>"), datePublished, $("<br>"), source, description);
             $(".news-articles-content").append(articleDiv);
         });
     });
+}
+
+function loadBookmarks() {
+var bookmarksList = JSON.parse(localStorage.getItem("bookmarksList"));
+if(bookmarksList)
+    bookmarksList.forEach(bookmark => {
+        var bookmark = $("<li>").append($("<a>").text(bookmark.title).prop("href", bookmark.url).prop("target", "_blank").addClass("waves-effect"));
+        $("#bookmarkList").append(bookmark);
+    });
+}
+
+function saveBookmark(text, link) {
+var bookmark = {title: text, url: link}
+var bookmarksList = JSON.parse(localStorage.getItem("bookmarksList"));
+if(!bookmarksList)
+    bookmarksList = []
+var found = false;
+bookmarksList.forEach(existingBookmark => {
+    if(bookmark.url == existingBookmark.url)
+        found = true;
+});
+if(!found) {
+    bookmarksList.push(bookmark);
+    var bookmark = $("<li>").append($("<a>").text(text).prop("href", link).prop("target", "_blank").addClass("waves-effect"));
+    $("#bookmarkList").append(bookmark);
+}
+
+localStorage.setItem("bookmarksList", JSON.stringify(bookmarksList));
 }
 
 $("#top-stories-btn").on("click", function(){getNews()});
