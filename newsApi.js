@@ -12,11 +12,29 @@ $(document).ready(function() {
 })
 
 // Category options are business, entertainment, general, health, science, sports, technology
-function getNews(category='', topics=10) { 
+function getNews(category='', topics=-1) { 
     sidenav.close();
     $(".news-articles-content").empty();
+
+    // Check for existing preferences
+    if(category == '') {
+        var currentCategory = localStorage.getItem("currentCategory");
+        if (currentCategory)
+            category = currentCategory;
+    }
+    if(topics == -1) {
+        var numberOfTopics = localStorage.getItem("numberOfTopics");
+        if (numberOfTopics) {
+            topics = numberOfTopics;
+            setDropdownText(numberOfTopics);
+        }
+        else
+            topics = 10
+    }
+
     localStorage.setItem("currentCategory", category);
     localStorage.setItem("numberOfTopics", topics);
+
     $.ajax({
         url: `${proxy}${baseUrl}?apiKey=${apiKey}&country=ca&category=${category}&pageSize=${topics}`,
         method: 'GET'
@@ -71,6 +89,11 @@ if(!found) {
 localStorage.setItem("bookmarksList", JSON.stringify(bookmarksList));
 }
 
+function setDropdownText(text) {
+    $(".dropdown-trigger").html(`${text} topics<i class="material-icons right">arrow_drop_down</i>`);
+    $(".dropdown-trigger-side").html(`${text} topics<i class="material-icons right">arrow_drop_down</i>`);
+}
+
 $("#top-stories-btn").on("click", function(){getNews()});
 $("#top-stories-btn-side").on("click", function(){getNews()});
 $("#sports-btn").on("click", function(){getNews("sports")});
@@ -81,7 +104,6 @@ $("#technology-btn").on("click", function(){getNews("technology")});
 $("#technology-btn-side").on("click", function(){getNews("technology")});
 
 $(".ddl-item").on("click", function() {
-    $(".dropdown-trigger").html(`${$(this).text()} topics<i class="material-icons right">arrow_drop_down</i>`);
-    $(".dropdown-trigger-side").html(`${$(this).text()} topics<i class="material-icons right">arrow_drop_down</i>`);
+    setDropdownText($(this).text());
     getNews(localStorage.getItem("currentCategory"), $(this).text());
 });
