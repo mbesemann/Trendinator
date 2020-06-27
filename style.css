@@ -17,6 +17,10 @@
     border-bottom: #EF6D72 3px solid;
 }
 
+.twitter-article-item{
+    border-bottom: green 3px solid;
+}
+
 .dark-blue{
     background-color: #2A3442;
 }
