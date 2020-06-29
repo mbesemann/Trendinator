@@ -43,52 +43,28 @@ function getNews(category='', topics=-1) {
     }).then(function(response) {
         //console.log(response);
         response.articles.forEach(story => {
-            var articleDiv = $("<div>");
-            articleDiv.addClass("news-article-item");
+            var articleDiv = $("<div>").addClass("card blue-grey darken-1");
+            var cardContent = $("<div>").addClass("card-content white-text");
             var favicon = $("<img>").prop("src", "https://www.google.com/s2/favicons?domain=" + story.url);
-            var articleUrl = $("<a>").prop("href", story.url).text(story.title).prop("target", "_blank").addClass("article-link");
-            var saveBtn = $("<a>").addClass("waves-effect waves-light btn saveBtn").text("Save").on("click", function() {
+            var articleUrl = $("<span>").addClass("card-title").append(favicon, "&nbsp;", ($("<a>").prop("href", story.url).text(story.title).prop("target", "_blank")));
+            var pinImage = $("<img>").prop("src", "https://img.icons8.com/color/48/000000/pin.png").prop("width", 20).prop("height", 20);
+            var saveBtn = $("<a>").addClass("saveBtn").append(pinImage).on("click", function() {
                 var link = $(this).prev().prop("href");
                 var text = $(this).prev().text();
                 saveBookmark(text, link);
                 sidenav.open();
             });
+            var description = $("<p>").text(story.description);
+            cardContent.append(articleUrl, description);
+            var cardAction = $("<div>").addClass("card-action white-text");
             var storyDate = DateTime.fromISO(story.publishedAt);
             var datePublished = $("<span>").text(storyDate.toLocaleString());
             var source = $("<span>").text(story.source.name);
-            var description = $("<p>").text(story.description);
-            articleDiv.append(favicon, articleUrl, "&nbsp;", saveBtn, $("<br>"), datePublished, $("<br>"), source, description);
+            cardAction.append(source, "&nbsp;", datePublished, "&nbsp;", saveBtn);
+            articleDiv.append(cardContent, cardAction);
             $(".news-articles-content").append(articleDiv);
         });
     });
-}
-
-function loadBookmarks() {
-var bookmarksList = JSON.parse(localStorage.getItem("bookmarksList"));
-if(bookmarksList)
-    bookmarksList.forEach(bookmark => {
-        var bookmark = $("<li>").append($("<a>").text(bookmark.title).prop("href", bookmark.url).prop("target", "_blank").addClass("waves-effect"));
-        $("#bookmarkList").append(bookmark);
-    });
-}
-
-function saveBookmark(text, link) {
-var bookmark = {title: text, url: link}
-var bookmarksList = JSON.parse(localStorage.getItem("bookmarksList"));
-if(!bookmarksList)
-    bookmarksList = []
-var found = false;
-bookmarksList.forEach(existingBookmark => {
-    if(bookmark.url == existingBookmark.url)
-        found = true;
-});
-if(!found) {
-    bookmarksList.push(bookmark);
-    var bookmark = $("<li>").append($("<a>").text(text).prop("href", link).prop("target", "_blank").addClass("waves-effect"));
-    $("#bookmarkList").append(bookmark);
-}
-
-localStorage.setItem("bookmarksList", JSON.stringify(bookmarksList));
 }
 
 function setDropdownText(text) {
