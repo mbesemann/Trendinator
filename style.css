@@ -44,3 +44,7 @@ h4 {
 .bookmarks {
     padding-left: 32px;
 }
+
+.saveBtn {
+    cursor: pointer;
+}
