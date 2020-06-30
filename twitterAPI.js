@@ -42,6 +42,9 @@ function addNewElement(trend, count) {
 }
 
 function fetchTwitterTrends(numItems, woeid) {
+    console.log("numItems: " + numItems);
+    console.log("woeid: " + woeid);
+    twitterTrendsContentElement.empty();
     cb.setConsumerKey(consumerKey, consumerSecretKey);
     cb.setToken(accessToken, accessTokenSecret);
     cb.__call("trends/place", {id: woeid}, function (reply, rate, err) {
@@ -74,8 +77,17 @@ function fetchTwitterTrendsLongLat(numItems, latitude, longitude) {
 $(".ddl-item").on("click", function (event) {
     event.preventDefault();
     var numberOfItemsToRetrieve = parseInt($(this).text());
-    twitterTrendsContentElement.empty();
-    fetchTwitterTrends(numberOfItemsToRetrieve, canadaWoeid);
+    var country = $(".dropdown-trigger-country").attr("data-country");
+    var woeid = countryToWoeid[country];
+    fetchTwitterTrends(numberOfItemsToRetrieve, woeid);
+});
+
+$(".country-item").on("click", function (event) {
+    event.preventDefault();
+    var country = $(this).attr("id");
+    var woeid = countryToWoeid[country];
+    var numberOfItemsToRetrieve = parseInt($(".dropdown-trigger").attr("data-article-num"));
+    fetchTwitterTrends(numberOfItemsToRetrieve, woeid);
 });
 
 function geoSuccess(position) {
