@@ -28,7 +28,7 @@ function getNews(category='', topics=-1, country='ca') {
         var numberOfTopics = localStorage.getItem("numberOfTopics");
         if (numberOfTopics) {
             topics = numberOfTopics;
-            setDropdownText(numberOfTopics);
+            //setDropdownText(numberOfTopics);
         }
         else
             topics = 10
@@ -39,7 +39,7 @@ function getNews(category='', topics=-1, country='ca') {
         country = convertCountry(savedCountry);
 
     localStorage.setItem("currentCategory", category);
-    localStorage.setItem("numberOfTopics", topics);
+    //localStorage.setItem("numberOfTopics", topics);
 
     $.ajax({
         url: `${proxy}${baseUrl}?apiKey=${apiKey}&country=${country}&category=${category.replace("top-stories","")}&pageSize=${topics}`,
