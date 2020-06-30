@@ -1,12 +1,12 @@
 //constants
-var consumerKey = "n9tuklQ7vCvdyEjVm7Nts9uNc";
-var consumerSecretKey = "2GciZDmg4pDoOD8BfnKOsUUssqixf8my4FewOz0Cb1GHG1VHyq";
-var accessToken = "1275421014852337672-6mKsYvcidkbFWWzXTH8qS48vJSfwLM";
-var accessTokenSecret = "gXo35SEf2Rlsc4Dnc6LLMhJsTRb88kp0wBxHY9JRxxu6u";
-var canadaWoeid = 23424775;
-var defaultNumTrends = 10;
-twitterTrendsContentElement = $(".twitter-trends-content");
-var countryToWoeid = 
+const consumerKey = "n9tuklQ7vCvdyEjVm7Nts9uNc";
+const consumerSecretKey = "2GciZDmg4pDoOD8BfnKOsUUssqixf8my4FewOz0Cb1GHG1VHyq";
+const accessToken = "1275421014852337672-6mKsYvcidkbFWWzXTH8qS48vJSfwLM";
+const accessTokenSecret = "gXo35SEf2Rlsc4Dnc6LLMhJsTRb88kp0wBxHY9JRxxu6u";
+const canadaWoeid = 23424775;
+const defaultNumTrends = 10;
+const twitterTrendsContentElement = $(".twitter-trends-content");
+const countryToWoeid = 
 {
     "World" : 1,
     "Austrialia" : 23424748,
@@ -18,6 +18,11 @@ var countryToWoeid =
     "Brazil":23424768,
     "Turkey": 23424969
 }
+const latitude = 0;
+const longitude = 0;
+
+//global variables
+var numTrendsGlobal = defaultNumTrends;
 
 var cb = new Codebird();
 
@@ -64,6 +69,7 @@ function fetchTwitterTrends(numItems, woeid) {
 function fetchTwitterTrendsLongLat(numItems, latitude, longitude) {
     cb.setConsumerKey(consumerKey, consumerSecretKey);
     cb.setToken(accessToken, accessTokenSecret);
+    console.log("in fetchTwitterTrendsLongLat, numItems = " + numItems);
     cb.__call("trends/closest", {lat: latitude, long: longitude}, function (reply, rate, err) {
         console.log(reply);
         console.log(err);
@@ -74,33 +80,43 @@ function fetchTwitterTrendsLongLat(numItems, latitude, longitude) {
     });
 }
 
-$(".ddl-item").on("click", function (event) {
-    event.preventDefault();
-    var numberOfItemsToRetrieve = parseInt($(this).text());
-    var country = $(".dropdown-trigger-country").attr("data-country");
-    var woeid = countryToWoeid[country];
-    fetchTwitterTrends(numberOfItemsToRetrieve, woeid);
-});
-
-$(".country-item").on("click", function (event) {
-    event.preventDefault();
-    var country = $(this).attr("id");
-    var woeid = countryToWoeid[country];
-    var numberOfItemsToRetrieve = parseInt($(".dropdown-trigger").attr("data-article-num"));
-    fetchTwitterTrends(numberOfItemsToRetrieve, woeid);
-});
-
 function geoSuccess(position) {
     const latitude  = position.coords.latitude;
     const longitude = position.coords.longitude;
-    fetchTwitterTrendsLongLat(defaultNumTrends, latitude, longitude);
+    fetchTwitterTrendsLongLat(numTrendsGlobal, latitude, longitude);
 }
 
 function geoError() {
     console.log("error getting the geolocation!")
 }
 
+$(".ddl-item").on("click", function (event) {
+    event.preventDefault();
+    numTrendsGlobal = parseInt($(this).attr("id"));
+    var country = $(".dropdown-trigger-country").attr("data-country");
+    if (country === "Current Location") {
+        getGeoLocation(geoSuccess, geoError);
+    }
+    else {
+        var woeid = countryToWoeid[country];
+        fetchTwitterTrends(numTrendsGlobal, woeid);
+    }
+});
+
+$(".country-item").on("click", function (event) {
+    event.preventDefault();
+    var country = $(this).attr("id");
+    var numTrendsGlobal = parseInt($(".dropdown-trigger").attr("data-num-articles"));
+
+    if (country === "Current Location") {
+        getGeoLocation(geoSuccess, geoError);
+    }
+    else {
+        var woeid = countryToWoeid[country];
+        fetchTwitterTrends(numTrendsGlobal, woeid);
+    }
+});
+
 $(document).ready(function () {
     fetchTwitterTrends(defaultNumTrends, canadaWoeid);
-    getGeoLocation(geoSuccess, geoError);
 });

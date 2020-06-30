@@ -1,29 +1,20 @@
-$(document).ready(function(){
+$(document).ready(function() {
     $('.sidenav').sidenav();
-  });
+    $(".dropdown-trigger").dropdown();
+    $(".dropdown-trigger-country").dropdown();
+});
 
-  $(".dropdown-trigger").dropdown();
-
-  $(".dropdown-trigger-country").dropdown();
-
-  function getGeoLocation(success, error) {
-
-    if(!navigator.geolocation) {
-      status.textContent = 'Geolocation is not supported by your browser';
-    } else {
-      status.textContent = 'Locating…';
-      navigator.geolocation.getCurrentPosition(success, error);
-    }
+function getGeoLocation(success, error) {
+  var options = {
+    enableHighAccuracy: false
+  };
 
   if(!navigator.geolocation) {
-    status.textContent = 'Geolocation is not supported by your browser';
+    console.log("Geolocation is not supported by your browser");
   } else {
-    status.textContent = 'Locating…';
+    console.log("Locating…");
     navigator.geolocation.getCurrentPosition(success, error);
   }
-
-  navigator.geolocation.getCurrentPosition(success, error);
-
 }
 
 function loadBookmarks() {
