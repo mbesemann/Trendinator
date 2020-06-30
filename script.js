@@ -65,5 +65,5 @@ $(".ddl-item").on("click", function() {
 
 $(".country-item").on("click", function() {
   setDropdownText($(this).text(), ".dropdown-trigger-country", "");
+  localStorage.setItem("currentCountry", $(this).text());
 });
-

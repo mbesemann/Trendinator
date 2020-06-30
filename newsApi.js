@@ -12,7 +12,7 @@ $(document).ready(function() {
 })
 
 // Category options are business, entertainment, general, health, science, sports, technology
-function getNews(category='', topics=-1) { 
+function getNews(category='', topics=-1, country='ca') { 
     sidenav.close();
     $(".news-articles-content").empty();
 
@@ -34,11 +34,15 @@ function getNews(category='', topics=-1) {
             topics = 10
     }
 
+    savedCountry = localStorage.getItem("currentCountry");
+    if(savedCountry)
+        country = convertCountry(savedCountry);
+
     localStorage.setItem("currentCategory", category);
     localStorage.setItem("numberOfTopics", topics);
 
     $.ajax({
-        url: `${proxy}${baseUrl}?apiKey=${apiKey}&country=ca&category=${category.replace("top-stories","")}&pageSize=${topics}`,
+        url: `${proxy}${baseUrl}?apiKey=${apiKey}&country=${country}&category=${category.replace("top-stories","")}&pageSize=${topics}`,
         method: 'GET'
     }).then(function(response) {
         //console.log(response);
@@ -91,3 +95,39 @@ function setCategory(id) {
 $(".ddl-item").on("click", function() {
     getNews(localStorage.getItem("currentCategory"), $(this).text());
 });
+
+function convertCountry(country) {
+    var abbrev = '';
+    switch(country) {
+        case 'Australia':
+            abbrev = 'au';
+            break;
+        case 'Canada':
+            abbrev = 'ca';
+            break;
+        case 'United Kingdom':
+            abbrev = 'gb';
+            break;
+        case 'United States':
+            abbrev = 'us';
+            break;
+        case 'Japan':
+            abbrev = 'jp';
+            break;
+        case 'India':
+            abbrev = 'in';
+            break;
+        case 'Brazil':
+            abbrev = 'br';
+            break;
+        case 'Turkey':
+            abbrev = 'tr';
+            break;
+    }
+    return abbrev;
+}
+
+$(".country-item").on("click", function() {
+    var country = $(this).first().text();
+    getNews(undefined,undefined,convertCountry(country));
+})
