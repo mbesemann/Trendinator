@@ -53,3 +53,17 @@ function loadBookmarks() {
   
   localStorage.setItem("bookmarksList", JSON.stringify(bookmarksList));
 }
+
+function setDropdownText(text, triggerClass, appendText) {
+  $(triggerClass).html(`${text} ${appendText} <i class="material-icons right">arrow_drop_down</i>`);
+  $(".dropdown-trigger-side").html(`${text} ${appendText} <i class="material-icons right">arrow_drop_down</i>`);
+}
+
+$(".ddl-item").on("click", function() {
+  setDropdownText($(this).text(), ".dropdown-trigger", "topics");
+});
+
+$(".country-item").on("click", function() {
+  setDropdownText($(this).text(), ".dropdown-trigger-country", "");
+});
+

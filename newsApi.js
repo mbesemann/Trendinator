@@ -67,11 +67,6 @@ function getNews(category='', topics=-1) {
     });
 }
 
-function setDropdownText(text) {
-    $(".dropdown-trigger").html(`${text} topics<i class="material-icons right">arrow_drop_down</i>`);
-    $(".dropdown-trigger-side").html(`${text} topics<i class="material-icons right">arrow_drop_down</i>`);
-}
-
 $("#top-stories-btn").on("click", function(){getNews("top-stories");});
 $("#top-stories-btn-side").on("click", function(){setCategory("#top-stories-btn"); getNews("top-stories");});
 $("#sports-btn").on("click", function(){getNews("sports");});
@@ -94,6 +89,5 @@ function setCategory(id) {
 }
 
 $(".ddl-item").on("click", function() {
-    setDropdownText($(this).text());
     getNews(localStorage.getItem("currentCategory"), $(this).text());
 });
