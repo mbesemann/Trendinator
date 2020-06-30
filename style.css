@@ -37,6 +37,11 @@ h4 {
 .saveBtn {
     cursor: pointer;
 }
+
+.country-dropdown {
+    padding-top: 32px;
+}
+
 @media (min-width: 600px){
     .brand-logo{
         margin-left: 50px;

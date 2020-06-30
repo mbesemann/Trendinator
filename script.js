@@ -1,7 +1,10 @@
 $(document).ready(function() {
     $('.sidenav').sidenav();
     $(".dropdown-trigger").dropdown();
-    $(".dropdown-trigger-country").dropdown();
+    $(".dropdown-trigger-country").dropdown({
+        constrainWidth: false
+      }
+    );
 });
 
 function getGeoLocation(success, error) {
@@ -26,7 +29,7 @@ function loadBookmarks() {
       });
   }
   
-  function saveBookmark(text, link) {
+function saveBookmark(text, link) {
   var bookmark = {title: text, url: link}
   var bookmarksList = JSON.parse(localStorage.getItem("bookmarksList"));
   if(!bookmarksList)

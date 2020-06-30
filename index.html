@@ -28,7 +28,7 @@
                             <li><a id="technology-btn" class="category waves-effect waves-light btn coral">Technology <i class="material-icons right">phone_iphone</i></a></li>
                         </ul>
                     <div class="right hide-on-med-and-down">
-                        <a class="dropdown-trigger" href="#!" data-target="dropdown" data-num-articles="10" id="ddlArticles">10 topics<i class="material-icons right">arrow_drop_down</i></a>
+                        <a class="dropdown-trigger" href="#!" data-target="dropdown" data-article-num="10" id="ddlArticles">10 topics<i class="material-icons right">arrow_drop_down</i></a>
                         <ul id="dropdown" class="dropdown-content">
                             <li class="ddl-item" id="5"><a href="#!">5</a></li>
                             <li class="ddl-item" id="10"><a href="#!">10</a></li>
@@ -63,34 +63,42 @@
             <li><a id="technology-btn-side" href="#">Technology</a></li>
         </ul>
         <div class="side-dropdown">
-        <a class="dropdown-trigger" href="#!" data-target="dropdown-side" id="ddlArticles-side">10 topics<i class="material-icons right">arrow_drop_down</i></a>
-        <ul id="dropdown-side" class="dropdown-content">
-            <li class="ddl-item"><a href="#!">5</a></li>
-            <li class="ddl-item"><a href="#!">10</a></li>
-            <li class="ddl-item"><a href="#!">15</a></li>
-        </ul>
+            <a class="dropdown-trigger" href="#!" data-target="dropdown-side" data-article-num="10" id="ddlArticles-side">10 topics<i class="material-icons right">arrow_drop_down</i></a>
+            <ul id="dropdown-side" class="dropdown-content">
+                <li class="ddl-item" id="5"><a href="#!">5</a></li>
+                <li class="ddl-item" id="10"><a href="#!">10</a></li>
+                <li class="ddl-item" id="15"><a href="#!">15</a></li>
+            </ul>           
+        </div>
+        <div class="side-dropdown country-dropdown">
+            <a class="dropdown-trigger-country" href="#!" data-target="dropdown-side-country" data-country = "Canada" id="country">Canada<i class="material-icons right">arrow_drop_down</i></a>
+            <ul id="dropdown-side-country" class="dropdown-content">
+                <li class="country-item" id="Current Location"><a href="#!">Current Location</a></li>
+                <li class="country-item" id="World"><a href="#!">World</a></li>
+                <li class="country-item" id="Canada"><a href="#!">Canada</a></li>
+                <li class="country-item" id="United Kingdom"><a href="#!">United Kingdom</a></li>
+                <li class="country-item" id="United States"><a href="#!">United States</a></li>
+                <li class="country-item" id="Japan"><a href="#!">Japan</a></li>
+                <li class="country-item" id="India"><a href="#!">India</a></li>
+                <li class="country-item" id="Brazil"><a href="#!">Brazil</a></li>
+                <li class="country-item" id="Turkey"><a href="#!">Turkey</a></li>
+            </ul>            
         </div>
         <br/>
         <div class="bookmarks">
             <h4>Bookmarks</h4>
-            <ul id="bookmarkList">
-                
-            </ul>
+            <ul id="bookmarkList"></ul>
         </div>
     </div>
     <div class="container">
         <div class="row">
             <div class="col m6 s12 center-align news-articles">
                 <span class="titles">News Articles</span>
-                <div class="news-articles-content">
-                        
-                </div>
+                <div class="news-articles-content"></div>
             </div>
             <div class="col m6 s12 center-align twitter-trends">
                 <span class="titles">Twitter Trends</span>
-                <div class="twitter-trends-content">
-                    
-                </div>
+                <div class="twitter-trends-content"></div>
             </div>
         </div>
     </div>
