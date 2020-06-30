@@ -45,12 +45,11 @@ h4 {
     padding-left: 32px;
 }
 
-<<<<<<< HEAD
 .saveBtn {
     cursor: pointer;
 }
-=======
-.brand-logo{
-    margin-left: 50px;
+@media (min-width: 600px){
+    .brand-logo{
+        margin-left: 50px;
+    }
 }
->>>>>>> margin left for brand logo
