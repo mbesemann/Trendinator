@@ -23,6 +23,9 @@ function getNews(category='', topics=-1, country='ca') {
             category = currentCategory;
             setCategory(`#${currentCategory}-btn`);
         }
+        else {
+            setCategory(`#top-stories-btn`);
+        }
     }
     if(topics == -1) {
         var numberOfTopics = localStorage.getItem("numberOfTopics");
@@ -42,7 +45,7 @@ function getNews(category='', topics=-1, country='ca') {
     //localStorage.setItem("numberOfTopics", topics);
 
     $.ajax({
-        url: `${proxy}${baseUrl}?apiKey=${apiKey}&country=${country}&category=${category.replace("top-stories","")}&pageSize=${topics}`,
+        url: `${proxy}${baseUrl}?apiKey=${apiKey}&country=${country}&category=${category.replace("top-stories", "")}&pageSize=${topics}`,
         method: 'GET'
     }).then(function(response) {
         //console.log(response);
