@@ -53,9 +53,7 @@ function getNews(category='', topics=-1, country='ca') {
             var articleUrl = $("<span>").addClass("card-title").append(favicon, "&nbsp;", ($("<a>").prop("href", story.url).text(story.title).prop("target", "_blank")));
             var pinImage = $("<img>").prop("src", "https://img.icons8.com/color/48/000000/pin.png").prop("width", 20).prop("height", 20);
             var saveBtn = $("<a>").addClass("saveBtn").append(pinImage).on("click", function() {
-                var link = $(this).prev().prop("href");
-                var text = $(this).prev().text();
-                saveBookmark(text, link);
+                saveBookmark(story.title, story.url);
                 sidenav.open();
             });
             var description = $("<p>").text(story.description);
