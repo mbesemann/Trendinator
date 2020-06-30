@@ -106,7 +106,7 @@ $(".ddl-item").on("click", function (event) {
 $(".country-item").on("click", function (event) {
     event.preventDefault();
     var country = $(this).attr("id");
-    var numTrendsGlobal = parseInt($(".dropdown-trigger").attr("data-num-articles"));
+    var numTrendsGlobal = parseInt($(".dropdown-trigger").attr("data-article-num"));
 
     if (country === "Current Location") {
         getGeoLocation(geoSuccess, geoError);
