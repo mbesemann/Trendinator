@@ -61,9 +61,12 @@ function setDropdownText(text, triggerClass, appendText) {
 
 $(".ddl-item").on("click", function() {
   setDropdownText($(this).text(), ".dropdown-trigger", "topics");
+  $(".dropdown-trigger").attr("data-article-num", $(this).attr("id"));
 });
 
 $(".country-item").on("click", function() {
   setDropdownText($(this).text(), ".dropdown-trigger-country", "");
+  $(".dropdown-trigger-country").attr("data-country", $(this).attr("id"));
   localStorage.setItem("currentCountry", $(this).text());
 });
+
