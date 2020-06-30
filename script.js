@@ -1,9 +1,10 @@
 $(document).ready(function(){
     $('.sidenav').sidenav();
+    loadTopics();
+    loadCountry();
   });
 
   $(".dropdown-trigger").dropdown();
-
   $(".dropdown-trigger-country").dropdown();
 
   function getGeoLocation(success, error) {
@@ -54,6 +55,22 @@ function loadBookmarks() {
   localStorage.setItem("bookmarksList", JSON.stringify(bookmarksList));
 }
 
+function loadCountry() {
+  savedCountry = localStorage.getItem("currentCountry");
+    if(savedCountry) {
+      setDropdownText(savedCountry, ".dropdown-trigger-country", "");
+      $(".dropdown-trigger-country").attr("data-country", savedCountry);
+    }
+}
+
+function loadTopics() {
+  savedTopics = localStorage.getItem("numberOfTopics");
+    if(savedTopics) {
+      setDropdownText(savedTopics, ".dropdown-trigger", "topics");
+      $(".dropdown-trigger").attr("data-article-num", savedTopics);
+    }
+}
+
 function setDropdownText(text, triggerClass, appendText) {
   $(triggerClass).html(`${text} ${appendText} <i class="material-icons right">arrow_drop_down</i>`);
   $(".dropdown-trigger-side").html(`${text} ${appendText} <i class="material-icons right">arrow_drop_down</i>`);
@@ -62,6 +79,7 @@ function setDropdownText(text, triggerClass, appendText) {
 $(".ddl-item").on("click", function() {
   setDropdownText($(this).text(), ".dropdown-trigger", "topics");
   $(".dropdown-trigger").attr("data-article-num", $(this).attr("id"));
+  localStorage.setItem("numberOfTopics", $(this).text());
 });
 
 $(".country-item").on("click", function() {
