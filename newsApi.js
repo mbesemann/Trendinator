@@ -91,3 +91,7 @@ function setCategory(id) {
 $(".ddl-item").on("click", function() {
     getNews(localStorage.getItem("currentCategory"), $(this).text());
 });
+
+$(".country-item").on("click", function() {
+    var country = $(this).first().text();
+})
