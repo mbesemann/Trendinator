@@ -24,14 +24,18 @@ var cb = new Codebird();
 function addNewElement(trend, count) {
     var trendDiv = $("<div>");
     trendDiv.addClass("twitter-article-item");
-    var trendNum = $("<div>").text(count);
+    trendDiv.addClass("card blue-grey darken-1");
+    var trendNum = $("<div>").text("#" + count);
+    trendNum.addClass("card-content white-text");
     var trendNameUrl = $("<a>").text(trend.name).prop("href", trend.url).prop("target", "_blank");
-    trendDiv.append(trendNum);
+    trendNameUrl.addClass("card-title");
+    trendDiv.append(trendNum); 
     trendDiv.append(trendNameUrl);
-    trendDiv.append("<br>");
     if (trend.tweet_volume) {
-        var trendTweetVolumeDiv = $("<div>").text("Tweet Volume: " + trend.tweet_volume);
-        trendDiv.append(trendTweetVolumeDiv);
+        var tweetVolume = $("<span>").text("Tweet Volume: " + trend.tweet_volume)
+        var trendTweetVolumeDiv = $("<div>");
+        trendTweetVolumeDiv.append(tweetVolume);
+        trendDiv.append(trendTweetVolumeDiv.addClass("card-action white-text"));
     }
 
     twitterTrendsContentElement.append(trendDiv);
