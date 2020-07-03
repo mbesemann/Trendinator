@@ -23,12 +23,15 @@ function getNews(category='', topics=-1, country='ca') {
             category = currentCategory;
             setCategory(`#${currentCategory}-btn`);
         }
+        else {
+            setCategory(`#top-stories-btn`);
+        }
     }
     if(topics == -1) {
         var numberOfTopics = localStorage.getItem("numberOfTopics");
         if (numberOfTopics) {
             topics = numberOfTopics;
-            setDropdownText(numberOfTopics);
+            //setDropdownText(numberOfTopics);
         }
         else
             topics = 10
@@ -39,10 +42,10 @@ function getNews(category='', topics=-1, country='ca') {
         country = convertCountry(savedCountry);
 
     localStorage.setItem("currentCategory", category);
-    localStorage.setItem("numberOfTopics", topics);
+    //localStorage.setItem("numberOfTopics", topics);
 
     $.ajax({
-        url: `${proxy}${baseUrl}?apiKey=${apiKey}&country=${country}&category=${category.replace("top-stories","")}&pageSize=${topics}`,
+        url: `${proxy}${baseUrl}?language=en&apiKey=${apiKey}&country=${country}&category=${category.replace("top-stories", "")}&pageSize=${topics}`,
         method: 'GET'
     }).then(function(response) {
         //console.log(response);
@@ -53,9 +56,7 @@ function getNews(category='', topics=-1, country='ca') {
             var articleUrl = $("<span>").addClass("card-title").append(favicon, "&nbsp;", ($("<a>").prop("href", story.url).text(story.title).prop("target", "_blank")));
             var pinImage = $("<img>").prop("src", "https://img.icons8.com/color/48/000000/pin.png").prop("width", 20).prop("height", 20);
             var saveBtn = $("<a>").addClass("saveBtn").append(pinImage).on("click", function() {
-                var link = $(this).prev().prop("href");
-                var text = $(this).prev().text();
-                saveBookmark(text, link);
+                saveBookmark(story.title, story.url);
                 sidenav.open();
             });
             var description = $("<p>").text(story.description);
@@ -123,6 +124,11 @@ function convertCountry(country) {
         case 'Turkey':
             abbrev = 'tr';
             break;
+        default:
+            if(country.includes("Current")) {
+                var ipcountry = country.split("(")[1].replace(")","");
+                abbrev = convertCountry(ipcountry);
+            }
     }
     return abbrev;
 }
