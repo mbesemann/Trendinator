@@ -47,14 +47,27 @@ function addNewElement(trend, count) {
 }
 
 function fetchTwitterTrends(numItems, woeid) {
-    console.log("numItems: " + numItems);
-    console.log("woeid: " + woeid);
+    // console.log("numItems: " + numItems);
+    // console.log("woeid: " + woeid);
     twitterTrendsContentElement.empty();
-    cb.setConsumerKey(consumerKey, consumerSecretKey);
-    cb.setToken(accessToken, accessTokenSecret);
-    cb.__call("trends/place", {id: woeid}, function (reply, rate, err) {
-        console.log(reply);
-        console.log(err);
+    // cb.setConsumerKey(consumerKey, consumerSecretKey);
+    // cb.setToken(accessToken, accessTokenSecret);
+    // cb.__call("trends/place", {id: woeid}, function (reply, rate, err) {
+    //     console.log(reply);
+    //     console.log(err);
+    //     var count = 0;
+    //     reply[0].trends.some(function(trend, index) {
+    //         if (count++ == numItems) {
+    //             return true;
+    //         }
+
+    //         addNewElement(trend, count);
+    //     });
+    // });    
+    $.ajax({
+        url: `https://highlycaffeinated.ca:5002/trends/place?id=${woeid}`,
+        method: 'GET'
+    }).then(function (reply) {
         var count = 0;
         reply[0].trends.some(function(trend, index) {
             if (count++ == numItems) {
@@ -63,21 +76,28 @@ function fetchTwitterTrends(numItems, woeid) {
 
             addNewElement(trend, count);
         });
-    });    
+    })
 }
 
 function fetchTwitterTrendsLongLat(numItems, latitude, longitude) {
-    cb.setConsumerKey(consumerKey, consumerSecretKey);
-    cb.setToken(accessToken, accessTokenSecret);
-    console.log("in fetchTwitterTrendsLongLat, numItems = " + numItems);
-    cb.__call("trends/closest", {lat: latitude, long: longitude}, function (reply, rate, err) {
-        console.log(reply);
-        console.log(err);
+    // cb.setConsumerKey(consumerKey, consumerSecretKey);
+    // cb.setToken(accessToken, accessTokenSecret);
+    // console.log("in fetchTwitterTrendsLongLat, numItems = " + numItems);
+    // cb.__call("trends/closest", {lat: latitude, long: longitude}, function (reply, rate, err) {
+    //     console.log(reply);
+    //     console.log(err);
 
+    //     var woeid = reply[0].woeid;
+    //     console.log(woeid);
+    //     fetchTwitterTrends(numItems, woeid); 
+    // });
+    $.ajax({
+        url: `https://highlycaffeinated.ca:5002/trends/closest?lat=${latitude}&long=${longitude}`,
+        method: 'GET'
+    }).then(function (reply) {
         var woeid = reply[0].woeid;
-        console.log(woeid);
         fetchTwitterTrends(numItems, woeid); 
-    });
+    })
 }
 
 function geoSuccess(position) {
