@@ -8,6 +8,7 @@ $(document).ready(function() {
 
     loadTopics();
     loadCountry();
+    getIPLocation();
   });
 
   $(".dropdown-trigger").dropdown();
@@ -68,6 +69,15 @@ function loadTopics() {
       setDropdownText(savedTopics, ".dropdown-trigger", "topics");
       $(".dropdown-trigger").attr("data-article-num", savedTopics);
     }
+}
+
+function getIPLocation() {
+  $.ajax({
+    url: `https://api.ipdata.co?api-key=96aaacac279f559432f1e459db8bf588f981e8e4629a6df548dcc6f0`,
+    method: 'GET'
+  }).then(function(result) {
+    $("#location").text(`(${result.country_name})`);
+  });
 }
 
 function setDropdownText(text, triggerClass, appendText) {

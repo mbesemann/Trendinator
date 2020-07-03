@@ -45,7 +45,7 @@ function getNews(category='', topics=-1, country='ca') {
     //localStorage.setItem("numberOfTopics", topics);
 
     $.ajax({
-        url: `${proxy}${baseUrl}?apiKey=${apiKey}&country=${country}&category=${category.replace("top-stories", "")}&pageSize=${topics}`,
+        url: `${proxy}${baseUrl}?language=en&apiKey=${apiKey}&country=${country}&category=${category.replace("top-stories", "")}&pageSize=${topics}`,
         method: 'GET'
     }).then(function(response) {
         //console.log(response);
@@ -124,6 +124,11 @@ function convertCountry(country) {
         case 'Turkey':
             abbrev = 'tr';
             break;
+        default:
+            if(country.includes("Current")) {
+                var ipcountry = country.split("(")[1].replace(")","");
+                abbrev = convertCountry(ipcountry);
+            }
     }
     return abbrev;
 }
