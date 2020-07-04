@@ -126,7 +126,7 @@ $(".ddl-item").on("click", function (event) {
     event.preventDefault();
     numTrendsGlobal = parseInt($(this).attr("id"));
     var country = $(".dropdown-trigger-country").attr("data-country");
-    if (country === "Current Location") {
+    if (country.includes("Current")) {
         getGeoLocation(geoSuccess, geoError);
     }
     else {
@@ -140,7 +140,7 @@ $(".country-item").on("click", function (event) {
     var country = $(this).attr("id");
     var numTrendsGlobal = parseInt($(".dropdown-trigger").attr("data-article-num"));
 
-    if (country === "Current Location") {
+    if (country.includes("Current")) {
         getGeoLocation(geoSuccess, geoError);
     }
     else {
@@ -150,5 +150,20 @@ $(".country-item").on("click", function (event) {
 });
 
 $(document).ready(function () {
-    fetchTwitterTrends(defaultNumTrends, canadaWoeid);
+    numTrendsGlobal = parseInt(localStorage.getItem("numberOfTopics"));
+    if (!numTrendsGlobal) {
+        numTrendsGlobal = defaultNumTrends;
+    }
+
+    var countryWoeid = canadaWoeid;
+    var savedCountry = localStorage.getItem("currentCountry");
+    if (savedCountry) {
+        if (savedCountry.includes("Current")) {
+            getGeoLocation(geoSuccess, geoError);
+        }
+        else {
+            countryWoeid = countryToWoeid[savedCountry];
+            fetchTwitterTrends(numTrendsGlobal, countryWoeid);
+        }
+    }
 });
