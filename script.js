@@ -76,7 +76,7 @@ function getIPLocation() {
     url: `https://api.ipdata.co?api-key=96aaacac279f559432f1e459db8bf588f981e8e4629a6df548dcc6f0`,
     method: 'GET'
   }).then(function(result) {
-    $("#location").text(`(${result.country_name})`);
+    $(".location").text(`(${result.country_name})`);
   });
 }
 
