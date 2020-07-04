@@ -24,7 +24,8 @@ const longitude = 0;
 //global variables
 var numTrendsGlobal = defaultNumTrends;
 
-var cb = new Codebird();
+//no need to use Codebird anymore; invoking twitter API on server side
+//var cb = new Codebird();
 
 function addNewElement(trend, count) {
     var trendDiv = $("<div>");
@@ -34,8 +35,10 @@ function addNewElement(trend, count) {
     trendNum.addClass("card-content white-text");
     var trendNameUrl = $("<a>").text(trend.name).prop("href", trend.url).prop("target", "_blank");
     trendNameUrl.addClass("card-title");
+    var pinImage = $("<img>").prop("src", "https://img.icons8.com/color/48/000000/pin.png").prop("width", 20).prop("height", 20);
+    var saveBtn = $("<a>").addClass("saveBtn").append(pinImage).on("click", saveBtnClick);
     trendDiv.append(trendNum); 
-    trendDiv.append(trendNameUrl);
+    trendDiv.append(trendNameUrl, "&nbsp;", saveBtn);
     if (trend.tweet_volume) {
         var tweetVolume = $("<span>").text("Tweet Volume: " + trend.tweet_volume)
         var trendTweetVolumeDiv = $("<div>");
@@ -46,31 +49,40 @@ function addNewElement(trend, count) {
     twitterTrendsContentElement.append(trendDiv);
 }
 
-function fetchTwitterTrends(numItems, woeid) {
-    // console.log("numItems: " + numItems);
-    // console.log("woeid: " + woeid);
-    twitterTrendsContentElement.empty();
-    // cb.setConsumerKey(consumerKey, consumerSecretKey);
-    // cb.setToken(accessToken, accessTokenSecret);
-    // cb.__call("trends/place", {id: woeid}, function (reply, rate, err) {
-    //     console.log(reply);
-    //     console.log(err);
-    //     var count = 0;
-    //     reply[0].trends.some(function(trend, index) {
-    //         if (count++ == numItems) {
-    //             return true;
-    //         }
+function saveBtnClick(event) {
+    var trendDiv = $(this).parent().find(".card-title");
+    var trendName = trendDiv.text(); 
+    var trendUrl = trendDiv.prop("href");
 
-    //         addNewElement(trend, count);
-    //     });
-    // });    
+    saveBookmark(trendName, trendUrl);
+    sidenav.open();
+}
+
+function fetchTwitterTrends(numItems, woeid) {
+    twitterTrendsContentElement.empty();
+    //initially used codebird, but it turned out to not be reliable (stopped working on July 3rd, 2020),
+    //so switch to having the backend (python) do the actual query to the twitter API
+    /*
+    cb.setConsumerKey(consumerKey, consumerSecretKey);
+    cb.setToken(accessToken, accessTokenSecret);
+    cb.__call("trends/place", {id: woeid}, function (reply, rate, err) {
+        var count = 0;
+        reply[0].trends.some(function(trend, index) {
+            if (count++ === numItems) {
+                return true;
+            }
+
+            addNewElement(trend, count);
+        });
+    });
+    */    
     $.ajax({
         url: `https://highlycaffeinated.ca:5002/trends/place?id=${woeid}`,
         method: 'GET'
     }).then(function (reply) {
         var count = 0;
         reply[0].trends.some(function(trend, index) {
-            if (count++ == numItems) {
+            if (count++ === numItems) {
                 return true;
             }
 
@@ -80,17 +92,17 @@ function fetchTwitterTrends(numItems, woeid) {
 }
 
 function fetchTwitterTrendsLongLat(numItems, latitude, longitude) {
-    // cb.setConsumerKey(consumerKey, consumerSecretKey);
-    // cb.setToken(accessToken, accessTokenSecret);
-    // console.log("in fetchTwitterTrendsLongLat, numItems = " + numItems);
-    // cb.__call("trends/closest", {lat: latitude, long: longitude}, function (reply, rate, err) {
-    //     console.log(reply);
-    //     console.log(err);
-
-    //     var woeid = reply[0].woeid;
-    //     console.log(woeid);
-    //     fetchTwitterTrends(numItems, woeid); 
-    // });
+    //initially used codebird, but it turned out to not be reliable (stopped working on July 3rd, 2020),
+    //so switch to having the backend (python) do the actual query to the twitter API
+    /* 
+     cb.setConsumerKey(consumerKey, consumerSecretKey);
+     cb.setToken(accessToken, accessTokenSecret);
+     cb.__call("trends/closest", {lat: latitude, long: longitude}, function (reply, rate, err) {
+         var woeid = reply[0].woeid;
+         console.log(woeid);
+         fetchTwitterTrends(numItems, woeid); 
+     });
+     */
     $.ajax({
         url: `https://highlycaffeinated.ca:5002/trends/closest?lat=${latitude}&long=${longitude}`,
         method: 'GET'
