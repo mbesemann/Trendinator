@@ -48,7 +48,8 @@ function saveBookmark(text, link) {
   });
   if(!found) {
       bookmarksList.push(bookmark);
-      var bookmark = $("<li>").append($("<a>").text(text).prop("href", link).prop("target", "_blank").addClass("waves-effect"));
+      var bookmark = $("<li>");
+      bookmark.append($("<a>").text(text).prop("href", link).prop("target", "_blank").addClass("waves-effect"));
       $("#bookmarkList").append(bookmark);
   }
   
@@ -97,3 +98,8 @@ $(".country-item").on("click", function() {
   localStorage.setItem("currentCountry", $(this).text());
 });
 
+$("#clearBtn").on("click", function(event) {
+  event.preventDefault();
+  localStorage.removeItem("bookmarksList");
+  $("#bookmarkList").empty();
+})
